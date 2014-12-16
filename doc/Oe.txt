@@ -1,0 +1,51 @@
+0000 ldi: A := op
+0001 ldl: A := (A << 4) | op
+
+0010 ldo: A := [op]
+0011 sto: [op] := A
+
+0100 add: A += [op] (sets C)
+0101 sub: A -= [op] (sets C)
+0110 and: A &= [op]
+0111 ior: A |= [op]
+1000 xor: A ^= [op]
+1001 mul: A *= [op]
+
+1010 0000 srl:   A >>>= 1
+1010 0001 sra:   A >>= 1
+1010 0010 not:   A = ~A
+1010 0011 neg:   A = -A
+
+1010 0100 cmp:   Z = A == 0, N = A < 0
+1010 0101 adc:   A = A + C
+
+1010 1000 sx8:   A = (int8_t)A
+1010 1001 zx8:   A = (uint8_t)A
+1010 1010 sl8:   A <<= 8
+1010 1011 sr8:   A >>>= 8
+
+1010 1100 sx16:  A = (int16_t)A
+1010 1101 zx16:  A = (uint16_t)A
+1010 1110 sl16:  A <<= 16
+1010 1111 sr16:  A >>>= 16
+
+1011 ???
+1100 ???
+1101 ???
+
+1110 0000 jez: if (Z)        pc := A
+1110 0001 jlt: if (N)        pc := A
+1110 0010 jle: if (Z || N)   pc := A
+1110 0011 jnz: if (!Z)       pc := A
+1110 0100 jge: if (!N)       pc := A
+1110 0101 jgt: if (!Z && !N) pc := A
+1110 0110 jmp: pc := A
+1110 0111 jal: A := pc; pc := A
+1110 1111 nop: nop operation
+
+1111 0000 xad:  Addr := (Addr << width(A)) | A
+1111 0000 xsd:  Data := (Data << width(A)) | A
+1111 0001 xld:  A := Data; Data >>= width(A)
+1111 0010 xsm:  Mask := A
+1111 0011 xsa:  mem[Addr] := Data
+1111 0100 xla:  Data := mem[Addr]
